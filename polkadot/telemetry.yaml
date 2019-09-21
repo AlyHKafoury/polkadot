@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: telemetry
+  labels:
+    app: telemetry
+spec:
+  selector:
+    matchLabels:
+      app: telemetry
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: telemetry
+    spec:
+      containers:
+      - name: telemetry-frontend
+        image: telemetry
+        imagePullPolicy: Never
+        command: 
+          - yarn 
+        args:
+          - start:frontend
+        ports:
+          - containerPort: 3000
+            name: frontend
+      - name: telemetry-backend
+        image: telemetry
+        imagePullPolicy: Never
+        command: 
+          - yarn 
+        args:
+          - start:backend
+        ports:
+          - containerPort: 8080
+            name: backend
+          - containerPort: 1024
+            name: feed

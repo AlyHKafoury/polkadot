@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: polkadot
+  labels:
+    app: polkadot
+spec:
+  selector:
+    matchLabels:
+      app: polkadot
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: polkadot
+    spec:
+      containers:
+      - name: polkadot
+        image: chevdor/polkadot:0.4.4
+        command:
+          - polkadot
+        args:
+          - --chain
+          - alex
+          - --telemetry-url
+          - ws://telemetry:1024
+        resources:
+            limits:
+              cpu: 500m
+              memory: 500Mi
